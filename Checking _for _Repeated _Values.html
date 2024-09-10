@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Repeated Values</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        input,
+        button {
+            margin: 5px;
+        }
+
+        input {
+            padding: 10px 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            color: red;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Check Repeated Values</h1>
+    <p>Enter values separated by commas:</p>
+    <input type="text" id="valuesInput" placeholder="e.g., 1, 2, 3, 1, 3">
+    <button onclick="checkRepeatedValues()">Check</button>
+
+    <p id="result"></p>
+
+    <script>
+        function checkRepeatedValues() {
+            var input = document.getElementById('valuesInput').value; // Get the input value from the text box
+            var values = input.split(',').map(value => value.trim()); // Split the input into an array of values
+
+            var repeatedValues = {};
+            values.forEach((value, index) => { // Check for repeated values and store their row numbers
+                if (repeatedValues[value]) {
+                    repeatedValues[value].push(index + 1);
+                } else {
+                    repeatedValues[value] = [index + 1];
+                }
+            });
+
+            var result = [];
+            for (var [value, rows] of Object.entries(repeatedValues)) { // Build the message to display repeated rows
+                if (rows.length > 1) {
+                    result.push(`Value ${value} repeated at rows ${rows.join(', ')}`);
+                }
+            }
+
+            document.getElementById('result').textContent = result.length ? result.join('; ') : 'No repeated values found.';
+        }
+    </script>
+
+</body>
+
+</html>
